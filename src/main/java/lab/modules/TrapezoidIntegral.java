@@ -22,15 +22,24 @@ public class TrapezoidIntegral {
         solve(func, a, b, steps);
     }
 
-    static void solve(IFunc func, double a, double b, double step_count){
+    static void solve(IFunc func, double a, double b, double eps){
         ArrayList<Separation> separations = findSeparations(func, a, b);
 
         double sum = 0;
         for (Separation separation : separations){
-            Double result = integral(func, separation.getLeft(), separation.getRight(), step_count);
+            double step_count = 5;
+            double s, s1 = integral(func, separation.getLeft(), separation.getRight(), step_count);
+            do {
+                s = s1;     //второе приближение
+                step_count = 2 * step_count;  //увеличение числа шагов в два раза,
+                //т.е. уменьшение значения шага в два раза
+                s1 = integral(func, separation.getLeft(), separation.getRight(), step_count);
+            }
+            while (Math.abs(s1 - s) > eps);
+            double result = s1;
             sum += round(result, 8);
             System.out.println("Результат для промежутка["+String.format("%.8f",separation.getLeft())+","+String.format("%.8f",separation.getRight())+"]: " + String.format("%.8f", result));
-            System.out.println("Погрешность: " + String.format("%.8f", Math.abs(result-integral(func, separation.getLeft(), separation.getRight(), step_count*2))));
+            System.out.println("Погрешность: " + String.format("%.8f", Math.abs(s1-s)));
         }
         System.out.println("Общая  площадь: " + String.format("%.8f", round(sum, 8)));
     }
@@ -91,3 +100,4 @@ public class TrapezoidIntegral {
         return sum;
     }
 }
+
