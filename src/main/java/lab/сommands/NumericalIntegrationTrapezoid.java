@@ -22,6 +22,7 @@ public class NumericalIntegrationTrapezoid implements ICommand {
         funcHashMap.put("2x", x -> 2 * x);
         funcHashMap.put("1/x", x -> 1/x);
         funcHashMap.put("sin(x)/x", x -> Math.sin(x)/x);
+        funcHashMap.put("x^2", x -> Math.pow(x, 2));
 
         for(Map.Entry<String, IFunc> entry : funcHashMap.entrySet()) {
             commands.add(new ICommand() {
