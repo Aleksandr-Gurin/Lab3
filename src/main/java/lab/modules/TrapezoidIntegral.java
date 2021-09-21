@@ -15,7 +15,7 @@ public class TrapezoidIntegral {
             a = Double.parseDouble(scanner.nextLine());
             System.out.println("Введите верхнюю границу:");
             b = Double.parseDouble(scanner.nextLine());
-            System.out.println("Введите количество шагов:");
+            System.out.println("Введите погрешность:");
             steps = Double.parseDouble(scanner.nextLine());
             break;
         }
